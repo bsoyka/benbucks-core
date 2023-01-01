@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "benbucks-core"
+version = "0.1.0"
+description = "Core elements for the BenBucks currency"
+authors = ["Ben Soyka <hello@bsoyka.me>"]
+readme = "README.md"
+packages = [{include = "benbucks_core"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^2.15.9"
+pre-commit = "^2.21.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
