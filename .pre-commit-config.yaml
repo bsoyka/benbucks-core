@@ -6,12 +6,18 @@ repos:
           - id: end-of-file-fixer
     - repo: local
       hooks:
-          - id: pylint
-            name: pylint
-            entry: poetry run pylint
+          - id: black
+            name: Black
+            entry: poetry run black .
             language: system
             types: [python]
-            args: [
-                    "-rn", # Only display messages
-                    "-sn", # Don't display the score
-                ]
+          - id: flake8
+            name: Flake8
+            entry: poetry run flake8
+            language: system
+            types: [python]
+          - id: isort
+            name: isort
+            entry: poetry run isort .
+            language: system
+            types: [python]
