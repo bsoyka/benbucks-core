@@ -2,12 +2,14 @@ from typing import Optional
 
 from beanie import Document
 
+from ._utils import _round_money
+
 
 class User(Document):
     """A BenBucks user."""
 
     name: str
-    balance: float = 0.0
+    balance: int | float = 0
     pin: Optional[str] = None
 
     async def change_name(self, name: str) -> None:
@@ -19,7 +21,7 @@ class User(Document):
         self.name = name
         await self.save()
 
-    async def change_balance(self, amount: int | float) -> float:
+    async def change_balance(self, amount: int | float) -> int | float:
         """Change the user's balance by a given amount.
 
         Args:
@@ -34,7 +36,7 @@ class User(Document):
         if self.balance + amount < 0:
             raise ValueError("Balance cannot be negative")
 
-        self.balance += amount
+        self.balance = _round_money(self.balance + amount)
         await self.save()
 
         return self.balance
