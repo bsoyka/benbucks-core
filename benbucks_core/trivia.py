@@ -2,8 +2,7 @@ from beanie import Document
 
 from ._utils import _round_money
 
-SECOND_PLACE_VALUE = 0.7
-THIRD_PLACE_VALUE = 0.5
+PRIZE_MULTIPLIERS = (1, 0.7, 0.5)
 
 
 class TriviaQuestion(Document):
@@ -16,8 +15,7 @@ class TriviaQuestion(Document):
     @property
     def prizes(self) -> tuple[int, int, int]:
         """The prizes for the first, second, and third place winners."""
-        return (
-            _round_money(self.first_prize),
-            _round_money(self.first_prize * SECOND_PLACE_VALUE),
-            _round_money(self.first_prize * THIRD_PLACE_VALUE),
+        return tuple(
+            _round_money(self.first_prize * multiplier)
+            for multiplier in PRIZE_MULTIPLIERS
         )
