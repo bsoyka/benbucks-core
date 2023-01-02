@@ -24,6 +24,9 @@ pytest-cov = "^4.0.0"
 build-backend = "poetry.core.masonry.api"
 requires = ["poetry-core"]
 
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
 [tool.black]
 line-length = 79
 

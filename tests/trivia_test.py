@@ -1,9 +1,6 @@
-import pytest
-
 from benbucks_core import TriviaQuestion
 
 
-@pytest.mark.asyncio
 async def test_trivia_question_init(mongo_mock_client):
     """Test that a trivia question can be created."""
     question = TriviaQuestion(
@@ -20,7 +17,6 @@ async def test_trivia_question_init(mongo_mock_client):
     assert question.first_prize == 100
 
 
-@pytest.mark.asyncio
 async def test_trivia_question_prizes(mongo_mock_client):
     """Test that trivia prizes are calculated correctly."""
     question = TriviaQuestion(

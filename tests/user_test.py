@@ -3,7 +3,6 @@ import pytest
 from benbucks_core import User
 
 
-@pytest.mark.asyncio
 async def test_user_init(mongo_mock_client):
     """Test that a user can be created."""
     user = User(name="test")
@@ -13,7 +12,6 @@ async def test_user_init(mongo_mock_client):
     assert user.pin is None
 
 
-@pytest.mark.asyncio
 async def test_user_change_name(mongo_mock_client):
     """Test that a user's name can be changed."""
     user = User(name="test1")
@@ -23,7 +21,6 @@ async def test_user_change_name(mongo_mock_client):
     assert user.name == "test2"
 
 
-@pytest.mark.asyncio
 async def test_user_change_balance(mongo_mock_client):
     """Test that a user's balance can be changed."""
     user = User(name="test")
@@ -36,7 +33,6 @@ async def test_user_change_balance(mongo_mock_client):
     assert user.balance == 7
 
 
-@pytest.mark.asyncio
 async def test_user_change_balance_negative(mongo_mock_client):
     """Test that a user's balance cannot be made negative."""
     user = User(name="test", balance=5)
@@ -51,7 +47,6 @@ async def test_user_change_balance_negative(mongo_mock_client):
     assert user.balance == 4
 
 
-@pytest.mark.asyncio
 async def test_user_set_pin_from_empty(mongo_mock_client):
     """Test that a user's pin can be set when empty."""
     user = User(name="test")
@@ -61,7 +56,6 @@ async def test_user_set_pin_from_empty(mongo_mock_client):
     assert user.pin == "1234"
 
 
-@pytest.mark.asyncio
 async def test_user_set_pin_with_override(mongo_mock_client):
     """Test that a user's pin can be set again using the override
     parameter."""
@@ -72,7 +66,6 @@ async def test_user_set_pin_with_override(mongo_mock_client):
     assert user.pin == "5678"
 
 
-@pytest.mark.asyncio
 async def test_user_set_pin_without_override(mongo_mock_client):
     """Test that a user's pin cannot be set again without using the
     override parameter."""
