@@ -6,7 +6,7 @@ async def test_trivia_question_init(mongo_mock_client):
     question = TriviaQuestion(
         question="What is the answer to life, the universe, and everything?",
         answer="42",
-        first_prize=100,
+        first_prize=100.0,
     )
 
     assert (
@@ -14,7 +14,7 @@ async def test_trivia_question_init(mongo_mock_client):
         == "What is the answer to life, the universe, and everything?"
     )
     assert question.answer == "42"
-    assert question.first_prize == 100
+    assert question.first_prize == 100.0
 
 
 async def test_trivia_question_prizes(mongo_mock_client):
@@ -22,7 +22,7 @@ async def test_trivia_question_prizes(mongo_mock_client):
     question = TriviaQuestion(
         question="What is the answer to life, the universe, and everything?",
         answer="42",
-        first_prize=73,
+        first_prize=73.0,
     )
 
-    assert question.prizes == (73, 51.1, 36.5)
+    assert question.prizes == (73.0, 51.1, 36.5)

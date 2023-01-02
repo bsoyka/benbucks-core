@@ -2,7 +2,6 @@ from typing import Optional
 
 from beanie import Document
 
-from ._utils import _round_money
 from .pool import Pool
 
 
@@ -11,13 +10,13 @@ class User(Document):
 
     Attributes:
         name (str): The user's name.
-        balance (int | float, optional): The user's balance. Defaults to
+        balance (float, optional): The user's balance. Defaults to
             0.
         pin (str, optional): The user's PIN. Defaults to None.
     """
 
     name: str
-    balance: int | float = 0
+    balance: float = 0
     pin: Optional[str] = None
 
     async def change_name(self, name: str) -> None:
@@ -29,11 +28,11 @@ class User(Document):
         self.name = name
         await self.save()
 
-    async def change_balance(self, amount: int | float) -> int | float:
+    async def change_balance(self, amount: float) -> float:
         """Change the user's balance by a given amount.
 
         Args:
-            amount (int | float): The amount to change the balance by.
+            amount (float): The amount to change the balance by.
 
         Raises:
             ValueError: If the balance would be made negative.
@@ -44,7 +43,7 @@ class User(Document):
         if self.balance + amount < 0:
             raise ValueError("Balance cannot be negative")
 
-        self.balance = _round_money(self.balance + amount)
+        self.balance = round(self.balance + amount, 2)
         await self.save()
 
         return self.balance
@@ -66,14 +65,12 @@ class User(Document):
         self.pin = pin
         await self.save()
 
-    async def contribute_to_pool(
-        self, pool: Pool, amount: int | float
-    ) -> None:
+    async def contribute_to_pool(self, pool: Pool, amount: float) -> None:
         """Contribute to a pool.
 
         Args:
             pool (Pool): The pool to contribute to.
-            amount (int | float): The amount to contribute.
+            amount (float): The amount to contribute.
 
         Raises:
             ValueError: If the user does not have enough money.

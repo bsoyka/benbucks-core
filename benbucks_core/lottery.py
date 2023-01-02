@@ -12,9 +12,9 @@ class Lottery(Document):
 
     Attributes:
         name (str): The name of the lottery.
-        prize (int | float): The prize for the lottery.
-        ticket_price (int | float): The price of each ticket.
-        prize_increase (int | float, optional): The amount the prize
+        prize (float): The prize for the lottery.
+        ticket_price (float): The price of each ticket.
+        prize_increase (float, optional): The amount the prize
             increases by each time a ticket is bought. Defaults to 0.
         pool_increases (list, optional): A list containing tuples, each
             containing a Pool and the amount it increases by each time a
@@ -28,19 +28,19 @@ class Lottery(Document):
     """
 
     name: str
-    prize: int | float
-    ticket_price: int | float
-    prize_increase: int | float = 0
-    pool_increases: list[tuple[Pool, int | float]] = []
+    prize: float
+    ticket_price: float
+    prize_increase: float = 0
+    pool_increases: list[tuple[Pool, float]] = []
     tickets: list[User] = []
     winner: Optional[User] = None
     completed: bool = False
 
-    async def change_prize(self, amount: int | float) -> int | float:
+    async def change_prize(self, amount: float) -> float:
         """Change the prize by a given amount.
 
         Args:
-            amount (int | float): The amount to change the prize by.
+            amount (float): The amount to change the prize by.
 
         Raises:
             ValueError: If the prize would be made negative.

@@ -2,8 +2,6 @@ from typing import Self
 
 from beanie import Document
 
-from ._utils import _round_money
-
 
 class Pool(Document):
     """A pool of currency that users can contribute to.
@@ -11,19 +9,19 @@ class Pool(Document):
     Attributes:
         code (str): The short code for the pool.
         name (str, optional): The name of the pool. Defaults to "Pool".
-        balance (int | float, optional): The balance of the pool.
+        balance (float, optional): The balance of the pool.
             Defaults to 0.
     """
 
     code: str
     name: str = "Pool"
-    balance: int | float = 0
+    balance: float = 0
 
-    async def change_balance(self, amount: int | float) -> int | float:
+    async def change_balance(self, amount: float) -> float:
         """Change the pool's balance by a given amount.
 
         Args:
-            amount (int | float): The amount to change the balance by.
+            amount (float): The amount to change the balance by.
 
         Raises:
             ValueError: If the balance would be made negative.
@@ -34,7 +32,7 @@ class Pool(Document):
         if self.balance + amount < 0:
             raise ValueError("Balance cannot be negative")
 
-        self.balance = _round_money(self.balance + amount)
+        self.balance = round(self.balance + amount, 2)
         await self.save()
 
         return self.balance

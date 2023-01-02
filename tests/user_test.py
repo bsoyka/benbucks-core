@@ -8,7 +8,7 @@ async def test_user_init(mongo_mock_client):
     user = User(name="test")
 
     assert user.name == "test"
-    assert user.balance == 0
+    assert user.balance == 0.0
     assert user.pin is None
 
 
@@ -24,27 +24,27 @@ async def test_user_change_name(mongo_mock_client):
 async def test_user_change_balance(mongo_mock_client):
     """Test that a user's balance can be changed."""
     user = User(name="test")
-    assert user.balance == 0
+    assert user.balance == 0.0
 
-    await user.change_balance(10)
-    await user.change_balance(-5)
-    await user.change_balance(2)
+    await user.change_balance(10.0)
+    await user.change_balance(-5.0)
+    await user.change_balance(2.0)
 
-    assert user.balance == 7
+    assert user.balance == 7.0
 
 
 async def test_user_change_balance_negative(mongo_mock_client):
     """Test that a user's balance cannot be made negative."""
-    user = User(name="test", balance=5)
-    assert user.balance == 5
+    user = User(name="test", balance=5.0)
+    assert user.balance == 5.0
 
-    await user.change_balance(-1)
-    assert user.balance == 4
+    await user.change_balance(-1.0)
+    assert user.balance == 4.0
 
     with pytest.raises(ValueError):
-        await user.change_balance(-5)
+        await user.change_balance(-5.0)
 
-    assert user.balance == 4
+    assert user.balance == 4.0
 
 
 async def test_user_set_pin_from_empty(mongo_mock_client):
@@ -80,16 +80,16 @@ async def test_user_set_pin_without_override(mongo_mock_client):
 
 async def test_user_contribute_to_pool(mongo_mock_client):
     """Test that a user can contribute to a pool."""
-    user = User(name="test", balance=15)
+    user = User(name="test", balance=15.0)
     pool = Pool(code="test")
 
-    assert user.balance == 15
-    assert pool.balance == 0
+    assert user.balance == 15.0
+    assert pool.balance == 0.0
 
-    await user.contribute_to_pool(pool, 10)
+    await user.contribute_to_pool(pool, 10.0)
 
-    assert user.balance == 5
-    assert pool.balance == 10
+    assert user.balance == 5.0
+    assert pool.balance == 10.0
 
 
 async def test_user_contribute_to_pool_not_enough_money(mongo_mock_client):
@@ -98,27 +98,27 @@ async def test_user_contribute_to_pool_not_enough_money(mongo_mock_client):
     user = User(name="test", balance=5)
     pool = Pool(code="test")
 
-    assert user.balance == 5
-    assert pool.balance == 0
+    assert user.balance == 5.0
+    assert pool.balance == 0.0
 
     with pytest.raises(ValueError):
-        await user.contribute_to_pool(pool, 10)
+        await user.contribute_to_pool(pool, 10.0)
 
-    assert user.balance == 5
-    assert pool.balance == 0
+    assert user.balance == 5.0
+    assert pool.balance == 0.0
 
 
 async def test_user_contribute_to_pool_negative_amount(mongo_mock_client):
     """Test that a user cannot contribute a negative amount to a
     pool."""
-    user = User(name="test", balance=15)
+    user = User(name="test", balance=15.0)
     pool = Pool(code="test")
 
-    assert user.balance == 15
-    assert pool.balance == 0
+    assert user.balance == 15.0
+    assert pool.balance == 0.0
 
     with pytest.raises(ValueError):
-        await user.contribute_to_pool(pool, -10)
+        await user.contribute_to_pool(pool, -10.0)
 
-    assert user.balance == 15
-    assert pool.balance == 0
+    assert user.balance == 15.0
+    assert pool.balance == 0.0
