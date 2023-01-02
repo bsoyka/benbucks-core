@@ -1,6 +1,6 @@
 import pytest
 
-from benbucks_core import User
+from benbucks_core import Pool, User
 
 
 async def test_user_init(mongo_mock_client):
@@ -76,3 +76,49 @@ async def test_user_set_pin_without_override(mongo_mock_client):
         await user.set_pin("5678")
 
     assert user.pin == "1234"
+
+
+async def test_user_contribute_to_pool(mongo_mock_client):
+    """Test that a user can contribute to a pool."""
+    user = User(name="test", balance=15)
+    pool = Pool(code="test")
+
+    assert user.balance == 15
+    assert pool.balance == 0
+
+    await user.contribute_to_pool(pool, 10)
+
+    assert user.balance == 5
+    assert pool.balance == 10
+
+
+async def test_user_contribute_to_pool_not_enough_money(mongo_mock_client):
+    """Test that a user cannot contribute to a pool if they do not have
+    enough money."""
+    user = User(name="test", balance=5)
+    pool = Pool(code="test")
+
+    assert user.balance == 5
+    assert pool.balance == 0
+
+    with pytest.raises(ValueError):
+        await user.contribute_to_pool(pool, 10)
+
+    assert user.balance == 5
+    assert pool.balance == 0
+
+
+async def test_user_contribute_to_pool_negative_amount(mongo_mock_client):
+    """Test that a user cannot contribute a negative amount to a
+    pool."""
+    user = User(name="test", balance=15)
+    pool = Pool(code="test")
+
+    assert user.balance == 15
+    assert pool.balance == 0
+
+    with pytest.raises(ValueError):
+        await user.contribute_to_pool(pool, -10)
+
+    assert user.balance == 15
+    assert pool.balance == 0

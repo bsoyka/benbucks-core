@@ -3,6 +3,7 @@ from typing import Optional
 from beanie import Document
 
 from ._utils import _round_money
+from .pool import Pool
 
 
 class User(Document):
@@ -64,3 +65,27 @@ class User(Document):
 
         self.pin = pin
         await self.save()
+
+    async def contribute_to_pool(
+        self, pool: Pool, amount: int | float
+    ) -> None:
+        """Contribute to a pool.
+
+        Args:
+            pool (Pool): The pool to contribute to.
+            amount (int | float): The amount to contribute.
+
+        Raises:
+            ValueError: If the user does not have enough money.
+        """
+        if amount < 0:
+            raise ValueError("Cannot contribute negative amount")
+
+        if self.balance < amount:
+            raise ValueError("Not enough money")
+
+        await self.change_balance(-amount)
+        await pool.change_balance(amount)
+
+        await self.save()
+        await pool.save()
