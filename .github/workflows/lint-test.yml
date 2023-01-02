@@ -70,4 +70,9 @@ jobs:
               run: poetry install --no-interaction
 
             - name: Run tests
-              run: poetry run pytest
+              run: poetry run pytest --cov=benbucks_core --cov-report=xml
+
+            - name: Upload coverage
+              uses: codecov/codecov-action@v3
+              with:
+                  files: ./coverage.xml
