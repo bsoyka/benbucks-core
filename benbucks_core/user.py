@@ -6,7 +6,14 @@ from ._utils import _round_money
 
 
 class User(Document):
-    """A BenBucks user."""
+    """A BenBucks user.
+
+    Attributes:
+        name (str): The user's name.
+        balance (int | float, optional): The user's balance. Defaults to
+            0.
+        pin (str, optional): The user's PIN. Defaults to None.
+    """
 
     name: str
     balance: int | float = 0

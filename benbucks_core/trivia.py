@@ -6,7 +6,13 @@ PRIZE_MULTIPLIERS = (1, 0.7, 0.5)
 
 
 class TriviaQuestion(Document):
-    """A trivia question."""
+    """A trivia question.
+
+    Attributes:
+        question (str): The question.
+        answer (str): The correct answer.
+        first_prize (int | float): The prize for the first place winner.
+    """
 
     question: str
     answer: str

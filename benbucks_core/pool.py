@@ -6,7 +6,14 @@ from ._utils import _round_money
 
 
 class Pool(Document):
-    """A pool of currency that users can contribute to."""
+    """A pool of currency that users can contribute to.
+
+    Attributes:
+        code (str): The short code for the pool.
+        name (str, optional): The name of the pool. Defaults to "Pool".
+        balance (int | float, optional): The balance of the pool.
+            Defaults to 0.
+    """
 
     code: str
     name: str = "Pool"
