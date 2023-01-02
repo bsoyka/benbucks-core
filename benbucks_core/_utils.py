@@ -9,6 +9,6 @@ def _round_money(amount: int | float) -> int | float:
     return int(rounded) if rounded == int(rounded) else rounded
 
 
-def _format_money(amount: int | float) -> str:
+def format_money(amount: int | float) -> str:
     """Format a currency amount as a string."""
     return f"{CURRENCY_SYMBOL}{_round_money(amount):.2f}"

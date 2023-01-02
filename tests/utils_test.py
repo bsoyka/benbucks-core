@@ -1,6 +1,6 @@
 import pytest
 
-from benbucks_core._utils import CURRENCY_SYMBOL, _format_money, _round_money
+from benbucks_core._utils import CURRENCY_SYMBOL, _round_money, format_money
 
 
 @pytest.mark.parametrize(
@@ -32,4 +32,4 @@ def test_round_currency_type(test_input: int | float, expected: int | float):
 )
 def test_format_money(test_input: int | float, expected: str):
     """Test formatting of currency."""
-    assert _format_money(test_input) == CURRENCY_SYMBOL + expected
+    assert format_money(test_input) == CURRENCY_SYMBOL + expected
